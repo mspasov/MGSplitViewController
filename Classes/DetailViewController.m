@@ -118,6 +118,9 @@
 - (float)splitViewController:(MGSplitViewController *)svc constrainSplitPosition:(float)proposedPosition splitViewSize:(CGSize)viewSize
 {
 	//NSLog(@"%@", NSStringFromSelector(_cmd));
+    if (proposedPosition < svc.splitWidth) return 0;
+    if (proposedPosition < 200) return 200;
+    if (proposedPosition > 500) return 500;
 	return proposedPosition;
 }
 
@@ -128,14 +131,14 @@
 
 - (IBAction)toggleMasterView:(id)sender
 {
-	[splitController toggleMasterView:sender];
+	[splitController toggleMasterView];
 	[self configureView];
 }
 
 
 - (IBAction)toggleVertical:(id)sender
 {
-	[splitController toggleSplitOrientation:self];
+	[splitController toggleSplitOrientation];
 	[self configureView];
 }
 
@@ -150,7 +153,7 @@
 
 - (IBAction)toggleMasterBeforeDetail:(id)sender
 {
-	[splitController toggleMasterBeforeDetail:sender];
+	[splitController toggleMasterBeforeDetail];
 	[self configureView];
 }
 
@@ -179,6 +182,11 @@
     
     [detailItem release];
     [detailDescriptionLabel release];
+    
+    [masterBeforeDetailItem release];
+    [toggleItem  release];
+    [verticalItem release];
+    [dividerStyleItem release];
     [super dealloc];
 }
 
